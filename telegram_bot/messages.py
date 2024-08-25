@@ -22,5 +22,7 @@ def markup_start() -> types.ReplyKeyboardMarkup:
     btn3 = types.KeyboardButton('/convert')
     btn4 = types.KeyboardButton('/calculate')
     btn5 = types.KeyboardButton('/help')
-    markup.add(btn1, btn2, btn3, btn4, btn5)
+    btn6 = types.KeyboardButton('/joke')
+    btn7 = types.KeyboardButton('/joke_twopart')
+    markup.add(btn1, btn2, btn3, btn4, btn5, btn6, btn7)
     return markup
