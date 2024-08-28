@@ -2,6 +2,7 @@
 Module for working with JokeAPI
 """
 import requests
+from telebot import formatting
 
 JOKES_API_BASE_URL = 'https://v2.jokeapi.dev/joke/Programming,Pun'
 
@@ -37,10 +38,15 @@ def get_random_single_joke():
     return json_data['joke']
 
 
-def get_random_twopart_joke():
+def get_random_twopart_joke() -> str:
     json_data = get_joke('twopart')
 
     if not json_data:
         return 'Error'
 
-    return json_data['setup'], json_data['delivery']
+    text = formatting.format_text(
+        formatting.escape_html(json_data['setup']),
+        formatting.hspoiler(json_data['delivery'])
+    )
+
+    return text

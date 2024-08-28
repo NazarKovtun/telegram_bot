@@ -56,7 +56,7 @@ def show_notes() -> str:
 
     text = ''
     for note in notes:
-        text += f'Дата: {note[1]}\nНазва: {note[2]}\n\n{note[3]}\n\n'
+        text += f'Дата: {note[1]}\nНазва: {note[2]}\n\n{note[3]}\n\n\n'
 
     cur.close()
     conn.close()
@@ -69,8 +69,11 @@ def delete_note(message: types.Message) -> None | str:
 
     name = message.text.strip()
 
-    cur.execute('SELECT name FROM notes')
-    names = cur.fetchall()
+    cur.execute('SELECT * FROM notes')
+    info = cur.fetchall()
+    names = []
+    for i in info:
+        names.append(i[2])
 
     if name in names:
         cur.execute('''

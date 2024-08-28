@@ -189,12 +189,10 @@ def send_random_joke(message: types.Message):
 
 @bot.message_handler(commands=['joke_twopart'])
 def send_random_two_part_joke(message: types.Message):
-    setup, delivery = jokes.get_random_twopart_joke()
-
-    text = formatting.format_text(
-        formatting.escape_html(setup),
-        formatting.hspoiler(delivery))
-    bot.send_message(message.chat.id, text, parse_mode='html')
+    bot.send_message(
+        message.chat.id,
+        jokes.get_random_twopart_joke(),
+        parse_mode='html')
 
 
 # endregion
@@ -254,7 +252,7 @@ def delete_note(message: types.Message):
         bot.send_message(message.chat.id, text)
 
 
-# end region
+# endregion
 
 
 if __name__ == '__main__':

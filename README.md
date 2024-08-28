@@ -16,6 +16,7 @@ This bot can perform the following actions:
 - `/make_pass` - generate a password;
 - `/convert` - currency converter;
 - `/calculate` - calculator;
+- `/notes` - notes;
 - `/joke` and `/joke_twopart` - send a joke.
 
 # What's next
