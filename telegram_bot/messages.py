@@ -1,3 +1,6 @@
+"""
+Message storage module
+"""
 from telebot import types
 
 

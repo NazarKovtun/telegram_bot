@@ -13,9 +13,12 @@ import converter
 import jokes
 import make_pass
 import messages
+import my_filters
+import notes_db
 import weather
 
 bot: telebot.TeleBot = telebot.TeleBot(config.BOT_TOKEN)
+bot.add_custom_filter(my_filters.ContainsWordsFilter())
 
 amount: int = 0
 currency: CurrencyConverter = CurrencyConverter()
@@ -193,7 +196,65 @@ def send_random_two_part_joke(message: types.Message):
         formatting.hspoiler(delivery))
     bot.send_message(message.chat.id, text, parse_mode='html')
 
+
 # endregion
+
+# region notes
+
+@bot.message_handler(commands=['notes'])
+def notes_handle(message: types.Message):
+    notes_db.make_db()
+    bot.send_message(
+        message.chat.id,
+        'Нотатки\nОберіть дію в меню',
+        reply_markup=notes_db.markup_db())
+
+
+@bot.message_handler(contains_words='створити нотатку')
+def make_note_handle(message: types.Message):
+    bot.send_message(message.chat.id, 'Введіть назву нотатки')
+    bot.register_next_step_handler(message, make_note)
+
+
+def make_note(message: types.Message):
+    name = message.text.strip()
+    bot.send_message(message.chat.id, 'Введіть текст нотатки')
+    bot.register_next_step_handler(message, note, name)
+
+
+def note(message, name):
+    notes_db.make_note(message, name)
+    bot.send_message(message.chat.id, 'Нотатку створено')
+
+
+@bot.message_handler(contains_words='переглянути нотатки')
+def show_note_handle(message: types.Message):
+    bot.send_message(message.chat.id, 'Всі нотатки:')
+    bot.register_next_step_handler(message, show_notes)
+
+
+def show_notes(message: types.Message):
+    text = notes_db.show_notes()
+    if not text:
+        text = 'Нотаток не має'
+    bot.send_message(message.chat.id, text)
+
+
+@bot.message_handler(contains_words='видалити нотатку')
+def delete_note_handle(message: types.Message):
+    bot.send_message(message.chat.id, 'Введіть назву нотатки')
+    bot.register_next_step_handler(message, delete_note)
+
+
+def delete_note(message: types.Message):
+    text = notes_db.delete_note(message)
+    if not text:
+        bot.send_message(message.chat.id, 'Нотатку видалено')
+    else:
+        bot.send_message(message.chat.id, text)
+
+
+# end region
 
 
 if __name__ == '__main__':

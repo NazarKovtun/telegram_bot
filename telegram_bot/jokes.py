@@ -1,3 +1,6 @@
+"""
+Module for working with JokeAPI
+"""
 import requests
 
 JOKES_API_BASE_URL = 'https://v2.jokeapi.dev/joke/Programming,Pun'

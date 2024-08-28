@@ -1,3 +1,6 @@
+"""
+Password creation module
+"""
 import string
 import random
 from telebot.types import Message

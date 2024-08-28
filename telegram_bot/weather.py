@@ -1,3 +1,6 @@
+"""
+Module for working with OpenweatherApi
+"""
 import json
 import requests
 from telebot import types

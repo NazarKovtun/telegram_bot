@@ -1,3 +1,6 @@
+"""
+Module for working with CurrencyConverter
+"""
 from telebot import types
 
 pair: list[str] = ['USD/EUR', 'USD/GBP', 'EUR/USD', 'EUR/GBP', 'GBP/USD', 'GBP/EUR']
