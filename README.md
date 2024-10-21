@@ -8,7 +8,7 @@ Name bot in Telegram:
 
 [@I_canHelpBot](https://web.telegram.org/a/#7350741291)
 
-# What it do
+# What it does
 This bot can perform the following actions:
 - `/start` - run bot;
 - `/help` - list and description of available commands;
